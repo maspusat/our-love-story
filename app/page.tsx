@@ -1,53 +1,15 @@
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
 import Navbar from "@/components/layout/Navbar";
-import { siteConfig } from "@/lib/site";
+import Hero from "@/components/sections/Hero";
+import LoveCounter from "@/components/sections/LoveCounter";
 
-// export default function Home() {
-//   return (
-//     <>
-//       <Navbar />
-//       <Hero />
-//     </>
-//   );
-// }
-
-export default function Hero() {
+export default function Home() {
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-pink-200 via-rose-100 to-white">
-      <div className="text-center">
-
-        <p className="text-sm uppercase tracking-[6px] text-rose-500">
-          Welcome To
-        </p>
-
-        <h1 className="mt-3 text-6xl font-bold text-rose-600">
-          {siteConfig.title}
-        </h1>
-
-        <div className="mt-10 space-y-2">
-
-          <h2 className="text-4xl font-semibold text-gray-900">
-            {siteConfig.groom}
-          </h2>
-
-          <p className="text-2xl text-gray-500">&</p>
-
-          <h2 className="text-4xl font-semibold text-gray-900">
-            {siteConfig.bride}
-          </h2>
-
-        </div>
-
-        <p className="mt-8 text-lg italic text-gray-600">
-          {siteConfig.tagline}
-        </p>
-
-        <button className="mt-10 rounded-full bg-rose-500 px-8 py-3 font-semibold text-white hover:bg-rose-600 transition">
-          Enter Our Story ❤️
-        </button>
-
-      </div>
-    </section>
+    <>
+      <Navbar />
+      <Hero />
+      <LoveCounter />
+      <Footer />
+    </>
   );
 }

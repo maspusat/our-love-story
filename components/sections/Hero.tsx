@@ -1,45 +1,49 @@
+import { profile } from "@/data/profile";
+
 export default function Hero() {
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-pink-200 via-rose-100 to-white">
-      <div className="text-center">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-rose-100 via-pink-50 to-white">
 
-        <p className="text-sm uppercase tracking-[6px] text-rose-500">
+      <div className="absolute h-[500px] w-[500px] rounded-full bg-pink-300/30 blur-3xl" />
+
+      <div className="relative z-10 text-center">
+
+        <p className="uppercase tracking-[8px] text-rose-500">
           Welcome To
         </p>
 
-        <h1 className="mt-3 text-6xl font-bold text-rose-600">
-          Our Love Story
+        <h1 className="mt-4 text-7xl font-bold text-rose-600">
+          {profile.title}
         </h1>
+
+        <div className="mt-12">
+
+          {/* nanti diganti foto */}
+
+          <div className="mx-auto h-48 w-48 rounded-full border-4 border-white bg-white shadow-2xl" />
+
+        </div>
 
         <div className="mt-10 space-y-2">
 
-          <h2 className="text-4xl font-semibold text-gray-900">
-            Atalarik
+          <h2 className="text-5xl font-semibold text-gray-900">
+            {profile.groom}
           </h2>
 
-          <p className="text-2xl text-gray-500">
-            &
-          </p>
+          <p className="text-2xl text-rose-500">❤</p>
 
-          <h2 className="text-4xl font-semibold text-gray-900">
-            Rina Eka
+          <h2 className="text-5xl font-semibold text-gray-900">
+            {profile.bride}
           </h2>
 
         </div>
 
-        <p className="mt-8 text-lg italic text-gray-600">
-          Every love story is beautiful,
-          <br />
-          but ours is my favorite.
+        <p className="mx-auto mt-8 max-w-xl text-lg italic text-gray-600">
+          {profile.tagline}
         </p>
 
-        <button
-          className="mt-10 rounded-full bg-rose-500 px-8 py-3 font-semibold text-white transition hover:bg-rose-600"
-        >
-          Enter Our Story ❤️
-        </button>
-
       </div>
+
     </section>
   );
 }
