@@ -1,5 +1,5 @@
-import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 import Hero from "@/components/sections/Hero";
 import LoveCounter from "@/components/sections/LoveCounter";
@@ -12,15 +12,19 @@ export default function Home() {
     <>
       <Navbar />
 
-      <Hero />
+      <main>
 
-      <LoveCounter />
+        <Hero />
 
-      <Story />
+        <LoveCounter />
 
-      <Gallery />
+        <Story />
 
-      <Letter />
+        <Gallery />
+
+        <Letter />
+
+      </main>
 
       <Footer />
     </>
