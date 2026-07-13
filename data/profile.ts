@@ -1,6 +1,6 @@
+import { Profile } from "@/types/profile";
 
-
-export const profile = {
+export const profile: Profile = {
   title: "Our Love Story",
 
   groom: "Atalarik",
@@ -10,7 +10,7 @@ export const profile = {
   tagline:
     "Every love story is beautiful, but ours is my favorite.",
 
-  anniversary: new Date("2021-08-21"),
+  anniversary: "2021-08-21",
 
   location: "Indonesia",
 };
