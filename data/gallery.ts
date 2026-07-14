@@ -2,31 +2,37 @@ export const gallery = [
   {
     id: 1,
     image: "/images/gallery/1.jpg",
-    title: "Memory 1",
+    title: "First Date ❤️",
+    size: "large",
   },
   {
     id: 2,
     image: "/images/gallery/2.jpg",
-    title: "Memory 2",
+    title: "Coffee Together ☕",
+    size: "normal",
   },
   {
     id: 3,
     image: "/images/gallery/3.jpg",
-    title: "Memory 3",
+    title: "Holiday 🌴",
+    size: "normal",
   },
   {
     id: 4,
     image: "/images/gallery/4.jpg",
-    title: "Memory 4",
+    title: "Sunset 🌅",
+    size: "large",
   },
   {
     id: 5,
     image: "/images/gallery/5.jpg",
-    title: "Memory 5",
+    title: "Anniversary 🎉",
+    size: "normal",
   },
   {
     id: 6,
     image: "/images/gallery/6.jpg",
-    title: "Memory 6",
+    title: "Forever ❤️",
+    size: "normal",
   },
 ];

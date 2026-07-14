@@ -3,6 +3,10 @@ export interface Profile {
   groom: string;
   bride: string;
   tagline: string;
+
+  firstMeet: string;
+
   anniversary: string;
+
   location: string;
 }
