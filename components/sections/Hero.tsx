@@ -1,31 +1,52 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { profile } from "@/data/profile";
 import { calculateLoveDays } from "@/utils/date";
 
-export default function Hero() {
-  const totalDays = calculateLoveDays(profile.anniversary);
+type Props = {
+  data: {
+    website_title: string | null;
+    groom_name: string | null;
+    bride_name: string | null;
+    tagline: string | null;
+    anniversary: string | null;
+    hero_image: string | null;
+  } | null;
+};
 
-  const anniversaryDate = new Date(profile.anniversary).toLocaleDateString(
-    "id-ID",
-    {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }
-  );
+export default function Hero({
+  data,
+}: Props) {
+  const totalDays =
+    data?.anniversary
+      ? calculateLoveDays(
+          data.anniversary
+        )
+      : 0;
+
+  const anniversaryDate =
+    data?.anniversary
+      ? new Date(
+          data.anniversary
+        ).toLocaleDateString(
+          "id-ID",
+          {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }
+        )
+      : "-";
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-rose-100 via-pink-50 to-white px-6">
-      {/* Background Glow */}
+
       <div className="absolute -top-20 h-96 w-96 rounded-full bg-pink-300/30 blur-3xl" />
 
       <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-rose-300/20 blur-3xl" />
 
       <div className="absolute left-1/2 top-1/2 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-200/20 blur-3xl" />
 
-      {/* Card */}
       <div className="relative z-10 w-full max-w-3xl rounded-[40px] border border-white/40 bg-white/50 px-10 py-16 text-center shadow-2xl backdrop-blur-xl">
 
         <p className="text-sm uppercase tracking-[8px] text-rose-500">
@@ -33,38 +54,41 @@ export default function Hero() {
         </p>
 
         <h1 className="mt-4 text-5xl font-bold text-rose-600 md:text-7xl">
-          {profile.title}
+          {data?.website_title}
         </h1>
 
-        {/* Photo */}
         <div className="mt-12 flex justify-center">
+
           <Image
-            src="/images/couple.jpg"
-            alt={`${profile.groom} & ${profile.bride}`}
+            src={
+              data?.hero_image ||
+              "/images/couple.jpg"
+            }
+            alt={`${data?.groom_name} & ${data?.bride_name}`}
             width={260}
             height={260}
             priority
             className="rounded-full border-8 border-white object-cover shadow-2xl"
           />
+
         </div>
 
-        {/* Couple */}
         <h2 className="mt-10 text-4xl font-semibold text-gray-900 md:text-5xl">
-          {profile.groom}
+          {data?.groom_name}
         </h2>
 
-        <p className="mt-2 text-3xl">❤️</p>
+        <p className="mt-2 text-3xl">
+          ❤️
+        </p>
 
         <h2 className="mt-2 text-4xl font-semibold text-gray-900 md:text-5xl">
-          {profile.bride}
+          {data?.bride_name}
         </h2>
 
-        {/* Since */}
         <p className="mt-8 text-sm uppercase tracking-[6px] text-amber-600">
           Since {anniversaryDate}
         </p>
 
-        {/* Counter */}
         <h3 className="mt-6 text-6xl font-bold text-rose-600">
           {totalDays}
         </h3>
@@ -73,12 +97,10 @@ export default function Hero() {
           Days Together ❤️
         </p>
 
-        {/* Tagline */}
         <p className="mx-auto mt-10 max-w-xl text-lg italic leading-8 text-gray-600">
-          "{profile.tagline}"
+          "{data?.tagline}"
         </p>
 
-        {/* Button */}
         <div className="mt-12">
           <Link
             href="#gallery"
@@ -88,10 +110,10 @@ export default function Hero() {
           </Link>
         </div>
 
-        {/* Scroll */}
         <div className="mt-12 animate-bounce text-3xl text-rose-500">
           ↓
         </div>
+
       </div>
     </section>
   );

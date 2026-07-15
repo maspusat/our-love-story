@@ -8,25 +8,103 @@ import Gallery from "@/components/sections/Gallery";
 import Timeline from "@/components/sections/Timeline";
 import Letter from "@/components/sections/Letter";
 
-export default function Home() {
+import MusicPlayer from "@/components/player/MusicPlayer";
+
+import { createServerSupabase } from "@/lib/supabase/server";
+
+export default async function Home() {
+  const supabase =
+    await createServerSupabase();
+
+  const { data: settings } =
+    await supabase
+      .from("settings")
+      .select("*")
+      .single();
+
+  const { data: galleryData } =
+    await supabase
+      .from("gallery")
+      .select("*")
+      .eq(
+        "is_published",
+        true
+      )
+      .order(
+        "display_order",
+        {
+          ascending: true,
+        }
+      );
+
+  const { data: timelineData } =
+    await supabase
+      .from("timeline")
+      .select("*")
+      .eq(
+        "is_published",
+        true
+      )
+      .order(
+        "event_date",
+        {
+          ascending: true,
+        }
+      );
+
+  const { data: letters } =
+    await supabase
+      .from("love_letters")
+      .select("*")
+      .eq(
+        "is_published",
+        true
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false,
+        }
+      );
+
   return (
     <>
       <Navbar />
 
       <main>
+        <Hero
+          data={settings}
+        />
 
-        <Hero />
+        <LoveCounter
+          data={settings}
+        />
 
-        <LoveCounter />
+        <Story
+          data={settings}
+        />
 
-        <Story />
+        <Gallery
+          data={galleryData ?? []}
+        />
 
-        <Gallery />
+        <Timeline
+          data={timelineData ?? []}
+        />
 
-        <Timeline />
+        <Letter
+          data={letters ?? []}
+        />
 
-        <Letter />
-
+        <MusicPlayer
+          url={settings?.music_url ?? null}
+          title={
+            settings?.music_title ?? null
+          }
+          artist={
+            settings?.music_artist ?? null
+          }
+        />
       </main>
 
       <Footer />

@@ -1,21 +1,31 @@
-"use client";
-
 import Link from "next/link";
-import { navigation } from "@/data/navigation";
 
-export default function Navbar() {
+import { navigation } from "@/data/navigation";
+import { createServerSupabase } from "@/lib/supabase/server";
+
+export default async function Navbar() {
+  const supabase =
+    await createServerSupabase();
+
+  const { data: settings } =
+    await supabase
+      .from("settings")
+      .select("website_title")
+      .single();
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
         <Link
           href="/"
           className="text-xl font-bold text-rose-600"
         >
-          ❤️ Our Love Story
+          ❤️ {settings?.website_title ?? "Our Love Story"}
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
+
           {navigation.map((item) => (
             <li key={item.href}>
               <Link
@@ -26,6 +36,7 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+
         </ul>
 
         <Link
