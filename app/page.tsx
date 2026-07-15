@@ -9,8 +9,12 @@ import Timeline from "@/components/sections/Timeline";
 import Letter from "@/components/sections/Letter";
 
 import MusicPlayer from "@/components/player/MusicPlayer";
+import BirthdayModal from "@/components/birthday/BirthdayModal";
 
-import { createServerSupabase } from "@/lib/supabase/server";
+import {
+  createServerSupabase,
+} from "@/lib/supabase/server";
+
 
 export default async function Home() {
   const supabase =
@@ -21,6 +25,7 @@ export default async function Home() {
       .from("settings")
       .select("*")
       .single();
+
 
   const { data: galleryData } =
     await supabase
@@ -37,6 +42,7 @@ export default async function Home() {
         }
       );
 
+
   const { data: timelineData } =
     await supabase
       .from("timeline")
@@ -51,6 +57,7 @@ export default async function Home() {
           ascending: true,
         }
       );
+
 
   const { data: letters } =
     await supabase
@@ -67,8 +74,24 @@ export default async function Home() {
         }
       );
 
+
   return (
     <>
+      <BirthdayModal
+        groomBirthday={
+          settings?.birthday_groom ?? null
+        }
+        brideBirthday={
+          settings?.birthday_bride ?? null
+        }
+        groomName={
+          settings?.groom_name ?? null
+        }
+        brideName={
+          settings?.bride_name ?? null
+        }
+      />
+
       <Navbar />
 
       <main>
@@ -85,19 +108,27 @@ export default async function Home() {
         />
 
         <Gallery
-          data={galleryData ?? []}
+          data={
+            galleryData ?? []
+          }
         />
 
         <Timeline
-          data={timelineData ?? []}
+          data={
+            timelineData ?? []
+          }
         />
 
         <Letter
-          data={letters ?? []}
+          data={
+            letters ?? []
+          }
         />
 
         <MusicPlayer
-          url={settings?.music_url ?? null}
+          url={
+            settings?.music_url ?? null
+          }
           title={
             settings?.music_title ?? null
           }
