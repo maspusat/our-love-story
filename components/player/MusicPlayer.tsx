@@ -5,6 +5,7 @@ import {
   Pause,
   Play,
   Volume2,
+  Music, // Import icon musik untuk dipasang di tengah lingkaran pink
 } from "lucide-react";
 
 import {
@@ -28,7 +29,6 @@ type Props = {
   cover: string | null;
 };
 
-// Hanya tersisa 2 mode: full dan hidden
 type PlayerMode = "full" | "hidden";
 
 export default function MusicPlayer({
@@ -40,7 +40,7 @@ export default function MusicPlayer({
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [playing, setPlaying] = useState(false);
-  const [mode, setMode] = useState<PlayerMode>("full"); // Default langsung full
+  const [mode, setMode] = useState<PlayerMode>("full"); 
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.5);
@@ -114,7 +114,6 @@ export default function MusicPlayer({
     }
   }, [playing]);
 
-  // Toggle langsung: Full <-> Hidden
   const handleToggleMode = () => {
     setMode(mode === "full" ? "hidden" : "full");
   };
@@ -127,41 +126,42 @@ export default function MusicPlayer({
 
       <AnimatePresence mode="wait">
         {mode === "hidden" ? (
-          /* ================= MODE HIDDEN (Hanya Piringan Bulat Berputar) ================= */
+          /* ================= MODE HIDDEN (Lingkaran Bulat Pink Gradasi) ================= */
           <motion.button
             key="hidden-disc"
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            exit={{ scale: 0, opacity: 0, rotate: 180 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setMode("full")} // Klik disk putar untuk langsung membuka Full Mode
+            onClick={() => setMode("full")} 
             className="
               fixed
               bottom-6
               right-6
               z-50
               flex
-              h-16
-              w-16
+              h-14
+              w-14
               items-center
               justify-center
               rounded-full
+              bg-gradient-to-tr
+              from-rose-500
+              to-pink-500
+              shadow-[0_10px_25px_rgba(244,63,94,0.4)]
+              cursor-pointer
               border-2
               border-white/20
-              bg-[#141414]/90
-              shadow-[0_10px_30px_rgba(244,63,94,0.3)]
-              backdrop-blur-xl
-              cursor-pointer
-              overflow-hidden
             "
           >
-            <div className="scale-[0.45] transform origin-center">
-              <AlbumCover cover={cover} playing={playing} />
-            </div>
+            {/* Mengganti piringan hitam dengan icon musik putih yang berdenyut halus jika lagu menyala */}
+            <Music 
+              size={20} 
+              className={`text-white transition-transform ${playing ? 'animate-pulse scale-110' : ''}`} 
+            />
             
-            {/* Animasi ping halus di sekitar piringan penanda interaktif */}
-            <div className="absolute inset-0 rounded-full border border-rose-500/30 animate-ping pointer-events-none" />
+            <div className="absolute inset-0 rounded-full border border-rose-400/40 animate-ping pointer-events-none" />
           </motion.button>
         ) : (
           /* ================= MODE FULL (Tampilan Utama Card) ================= */
@@ -200,7 +200,6 @@ export default function MusicPlayer({
                 </span>
               </div>
 
-              {/* Tombol Minimize langsung menyembunyikan ke Piringan */}
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -212,19 +211,20 @@ export default function MusicPlayer({
             </div>
 
             {/* KONTEN UTAMA */}
-            <div className="space-y-2.5">
-              {/* Cover Bulat */}
-              <div className="flex justify-center scale-[0.6] origin-center -my-6">
+            <div className="space-y-2.5 flex flex-col items-center w-full">
+              
+              {/* Piringan besar utama tetap dipertahankan di dalam Card */}
+              <div className="flex justify-center scale-[0.75] origin-center my-2">
                 <AlbumCover cover={cover} playing={playing} />
               </div>
 
               {/* Title & Artist */}
-              <div className="text-center px-1 scale-[0.85] origin-top">
+              <div className="text-center px-1 w-full scale-[0.85] origin-top">
                 <MarqueeTitle title={title} artist={artist} />
               </div>
 
               {/* Progress Bar */}
-              <div className="px-0.5 scale-90 origin-center">
+              <div className="w-full px-0.5 scale-90 origin-center">
                 <ProgressBar
                   currentTime={currentTime}
                   duration={duration}
@@ -238,7 +238,7 @@ export default function MusicPlayer({
               </div>
 
               {/* Controls */}
-              <div className="flex items-center justify-between px-2 pt-1">
+              <div className="flex items-center justify-between w-full px-2 pt-1">
                 <div className="scale-75 origin-left">
                   <FavoriteButton songId={url} />
                 </div>
@@ -271,7 +271,7 @@ export default function MusicPlayer({
               </div>
 
               {/* Volume Slider */}
-              <div className="flex items-center gap-1.5 bg-white/5 rounded-lg py-1.5 px-2 scale-90 origin-center">
+              <div className="flex items-center gap-1.5 w-full bg-white/5 rounded-lg py-1.5 px-2 scale-90 origin-center">
                 <Volume2 className="text-white/30 flex-shrink-0" size={12} />
                 <input
                   type="range"
