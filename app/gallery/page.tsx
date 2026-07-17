@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { createServerSupabase } from "@/lib/supabase/server";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import GalleryList from "./GalleryList"; 
 
 export default async function GalleryPage() {
   const supabase = await createServerSupabase();
@@ -14,12 +14,30 @@ export default async function GalleryPage() {
 
   return (
     <>
+      
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes customSlideUp {
+              from {
+                opacity: 0;
+                transform: translateY(30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+          `,
+        }}
+      />
+
       <Navbar />
 
       <main className="min-h-screen bg-gradient-to-b from-rose-50 via-white to-pink-50 px-6 py-24">
         <section className="mx-auto max-w-7xl">
           
-          
+          {/* Header Section */}
           <div className="mb-12 text-center">
             <p className="text-sm font-semibold uppercase tracking-[6px] text-rose-400">
               Our Memories
@@ -42,40 +60,7 @@ export default async function GalleryPage() {
 
           ) : (
 
-            <div className="columns-1 gap-6 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5">
-              {gallery.map((item) => (
-                <div
-                  key={item.id}
-                  className="group mb-6 break-inside-avoid overflow-hidden rounded-[32px] bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                >
-                  
-                  <div className="flex items-center justify-center bg-black/5">
-                    <Image
-                      src={item.image_url}
-                      alt={item.title ?? "Gallery"}
-                      width={600}
-                      height={800}
-                      className="h-auto w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  </div>
-
-                  {(item.title || item.description) && (
-                    <div className="p-5">
-                      {item.title && (
-                        <h3 className="font-semibold text-gray-800">
-                          {item.title}
-                        </h3>
-                      )}
-                      {item.description && (
-                        <p className="mt-2 text-sm text-gray-500">
-                          {item.description}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            <GalleryList initialItems={gallery} />
 
           )}
 

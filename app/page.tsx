@@ -38,8 +38,8 @@ export default async function Home() {
     .order("created_at", { ascending: false });
 
   const randomGallery = [...(galleryData ?? [])]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 5);
+    .sort(() => Math.random() - 0.6)
+    .slice(0, 6);
 
   const homeTimeline = (timelineData ?? []).slice(0, 3);
 
